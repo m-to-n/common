@@ -1,4 +1,4 @@
-package tenants
+package customers
 
 import (
 	"github.com/m-to-n/common/channels"
