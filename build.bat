@@ -1,0 +1,3 @@
+echo off
+Rem build recursively all subdirectories
+go build ./...
