@@ -4,9 +4,12 @@ import (
 	"errors"
 )
 
+const CHANNELS_WHATSAPP = "whatsapp"
+const CHANNELS_UNKNOWN = "unknown"
+
 // https://threedots.tech/post/safer-enums-in-go/
 type ChannelType struct {
-	channelType string
+	channelType string `json:"channelType"`
 }
 
 var (
