@@ -1,26 +1,34 @@
 package tenants
 
+/**
+extension interface pattern to replace inheritance with composition:
+see https://medium.com/swlh/what-is-the-extension-interface-pattern-in-golang-ce852dcecaec
+we are not using in the end.
+*/
+
 import (
 	"encoding/json"
 )
 
-// use extension interface pattern to replace inheritance with composition
-// see https://medium.com/swlh/what-is-the-extension-interface-pattern-in-golang-ce852dcecaec
 type TenantChannelConfig struct {
 	// serializing this kind of enum into json does not work OOTB
 	// Channel channels.ChannelType `json:"channel"`
-	Channel string `json:"channel"`
+	Channel string                  `json:"channel"`
+	Data    TenantChannelConfigData `json:"data"`
+}
+
+type TenantChannelConfigData struct {
+	WhatsApp TenantChannelConfigWhatsApp `json:"whatsapp"`
+}
+
+type TenantChannelConfigWhatsApp struct {
+	AccountSid string                         `json:"accountSid"`
+	Numbers    []ChannelConfigWhatsAppNumbers `json:"numbers"`
 }
 
 type ChannelConfigWhatsAppNumbers struct {
 	PhoneNumber string `json:"phoneNumber"`
 	Language    string `json:"language"`
-}
-
-type TenantChannelConfigWhatsApp struct {
-	TenantChannelConfig
-	AccountSid string                         `json:"accountSid"`
-	Numbers    []ChannelConfigWhatsAppNumbers `json:"numbers"`
 }
 
 // represents configuration of platform tenant

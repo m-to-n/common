@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestClientValidateIncomingRequest(t *testing.T) {
+func TestTenantConfigToJsonString1(t *testing.T) {
 	t.Parallel()
 
 	tenantConfig := TenantConfig{
@@ -23,5 +23,39 @@ func TestClientValidateIncomingRequest(t *testing.T) {
 	tenantConfig.Channels = append(tenantConfig.Channels, tenantChannelConfig)
 
 	tcStr, _ := TenantConfigToJsonString(tenantConfig)
-	assert.Equal(t, *tcStr, `{"tenantId":"tenant-123","name":"dummyTenant","desc":"dummy tenant for development \u0026 testing","channels":[{"channel":"whatsapp"}]}`)
+	assert.Equal(t, *tcStr, `{"tenantId":"tenant-123","name":"dummyTenant","desc":"dummy tenant for development \u0026 testing","channels":[{"channel":"whatsapp","data":{"whatsapp":{"accountSid":"","numbers":null}}}]}`)
+}
+
+func TestTenantConfigToJsonString2(t *testing.T) {
+	t.Parallel()
+
+	tenantConfig := TenantConfig{
+		TenantId: "tenant-123",
+		Name:     "dummyTenant",
+		Desc:     "dummy tenant for development & testing",
+		Channels: make([]TenantChannelConfig, 0),
+	}
+
+	tenantChannelConfigWhatsApp := TenantChannelConfigWhatsApp{
+		AccountSid: "ACC123",
+		Numbers: []ChannelConfigWhatsAppNumbers{
+			ChannelConfigWhatsAppNumbers{
+				PhoneNumber: "+420123456789",
+				Language:    "en",
+			},
+		},
+	}
+
+	tenantChannelConfig := TenantChannelConfig{
+		Channel: channels.CHANNELS_WHATSAPP,
+		Data: TenantChannelConfigData{
+			WhatsApp: tenantChannelConfigWhatsApp,
+		},
+	}
+
+	tenantConfig.Channels = append(tenantConfig.Channels, tenantChannelConfig)
+
+	tcStr, _ := TenantConfigToJsonString(tenantConfig)
+	assert.Equal(t, *tcStr, `{"tenantId":"tenant-123","name":"dummyTenant","desc":"dummy tenant for development \u0026 testing","channels":[{"channel":"whatsapp","data":{"whatsapp":{"accountSid":"ACC123","numbers":[{"phoneNumber":"+420123456789","language":"en"}]}}}]}`)
+
 }
