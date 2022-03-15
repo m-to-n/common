@@ -23,7 +23,7 @@ func TestTenantConfigToJsonString1(t *testing.T) {
 	tenantConfig.Channels = append(tenantConfig.Channels, tenantChannelConfig)
 
 	tcStr, _ := TenantConfigToJsonString(tenantConfig)
-	assert.Equal(t, *tcStr, `{"tenantId":"tenant-123","name":"dummyTenant","desc":"dummy tenant for development \u0026 testing","channels":[{"channel":"whatsapp","data":{"whatsapp":{"accountSid":"","numbers":null}}}]}`)
+	assert.Equal(t, *tcStr, `{"tenantId":"tenant-123","name":"dummyTenant","desc":"dummy tenant for development \u0026 testing","channels":[{"channel":"whatsapp","data":{"whatsapp":{"accountSid":"","authToken":"","numbers":null}}}]}`)
 }
 
 func TestTenantConfigToJsonString2(t *testing.T) {
@@ -38,6 +38,7 @@ func TestTenantConfigToJsonString2(t *testing.T) {
 
 	tenantChannelConfigWhatsApp := TenantChannelConfigWhatsApp{
 		AccountSid: "ACC123",
+		AuthToken:  "b32456",
 		Numbers: []ChannelConfigWhatsAppNumbers{
 			ChannelConfigWhatsAppNumbers{
 				PhoneNumber: "+420123456789",
@@ -56,6 +57,6 @@ func TestTenantConfigToJsonString2(t *testing.T) {
 	tenantConfig.Channels = append(tenantConfig.Channels, tenantChannelConfig)
 
 	tcStr, _ := TenantConfigToJsonString(tenantConfig)
-	assert.Equal(t, *tcStr, `{"tenantId":"tenant-123","name":"dummyTenant","desc":"dummy tenant for development \u0026 testing","channels":[{"channel":"whatsapp","data":{"whatsapp":{"accountSid":"ACC123","numbers":[{"phoneNumber":"+420123456789","language":"en"}]}}}]}`)
+	assert.Equal(t, *tcStr, `{"tenantId":"tenant-123","name":"dummyTenant","desc":"dummy tenant for development \u0026 testing","channels":[{"channel":"whatsapp","data":{"whatsapp":{"accountSid":"ACC123","authToken":"b32456","numbers":[{"phoneNumber":"+420123456789","language":"en"}]}}}]}`)
 
 }

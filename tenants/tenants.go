@@ -23,6 +23,7 @@ type TenantChannelConfigData struct {
 
 type TenantChannelConfigWhatsApp struct {
 	AccountSid string                         `json:"accountSid"`
+	AuthToken  string                         `json:"authToken"`
 	Numbers    []ChannelConfigWhatsAppNumbers `json:"numbers"`
 }
 
