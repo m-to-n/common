@@ -41,6 +41,15 @@ type TenantConfig struct {
 	Channels []TenantChannelConfig `json:"channels"`
 }
 
+type TenantConfigByTenantIdReq struct {
+	TenantId string `json:"tenantId"`
+}
+
+type TenantConfigByTwilioAccIDAndReceiverNumReq struct {
+	AccountSid          string `json:"accountSid"`
+	ReceiverPhoneNumber string `json:"receiverPhoneNumber"`
+}
+
 func TenantConfigToJson(tc TenantConfig) ([]byte, error) {
 	tcBytes, err := json.Marshal(tc)
 	if err != nil {
