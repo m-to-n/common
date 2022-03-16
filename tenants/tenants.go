@@ -50,6 +50,17 @@ type TenantConfigByTwilioAccIDAndReceiverNumReq struct {
 	ReceiverPhoneNumber string `json:"receiverPhoneNumber"`
 }
 
+type TenantConfigDaprQueryResultResults struct {
+	Key  string       `json:"key"`
+	Data TenantConfig `json:"data"`
+	Etag string       `json:"etag"`
+}
+
+type TenantConfigDaprQueryResult struct {
+	Results []TenantConfigDaprQueryResultResults `json:"results"`
+	Token   string                               `json:"token"`
+}
+
 func TenantConfigToJson(tc TenantConfig) ([]byte, error) {
 	tcBytes, err := json.Marshal(tc)
 	if err != nil {
